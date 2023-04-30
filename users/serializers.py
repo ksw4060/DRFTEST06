@@ -28,8 +28,14 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
-        # Add custom claims
         token['email'] = user.email
+        token['username'] = user.username
         token['age'] = user.age
         token['gender'] = user.gender
         return token
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'age', 'gender', 'introduction')
